@@ -1,0 +1,12 @@
+{
+  "PAGES": {
+      "HOME": {
+          "TITLE": "TAS application!",
+          "GO_TO_DETAIL": "Add students"
+      },
+      "DETAIL": {
+        "TITLE": "Add student information!",
+        "BACK_TO_HOME": "Back to Home"
+    }
+  }
+}

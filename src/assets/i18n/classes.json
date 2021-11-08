@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "I-1",
+    "listOfStudents": [
+      {
+        "id": 1,
+        "name": "Ace",
+        "surname": "Janik",
+        "typeAnswers": [
+          {
+            "name": "test 1",
+            "grade": "5"
+          },
+          {
+            "name": "test 2",
+            "grade": "3"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Sveto",
+        "surname": "Gjor",
+        "typeAnswers": [
+          {
+            "name": "test 1",
+            "grade": "3"
+          },
+          {
+            "name": "test 2",
+            "grade": "4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "I-2",
+    "listOfStudents": [
+      {
+        "id": 1,
+        "name": "Pece",
+        "surname": "Anik",
+        "typeAnswers": [
+          {
+            "name": "test 1",
+            "grade": "5"
+          },
+          {
+            "name": "test 2",
+            "grade": "3"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "Mite",
+        "surname": "Jor",
+        "typeAnswers": [
+          {
+            "name": "test 1",
+            "grade": "3"
+          },
+          {
+            "name": "test 2",
+            "grade": "4"
+          }
+        ]
+      }
+    ]
+  }
+]

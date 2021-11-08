@@ -1,0 +1,95 @@
+<!-- <div *ngFor="let s of students">
+  <p>{{s.name}}</p>
+</div> -->
+<br>
+<h1 class="text-center">TAS application</h1>
+<br>
+<!-- <div *ngFor="let c of classes">
+<p (click)="navigateToFirst(c.id)">{{c.name}}</p>
+</div> -->
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="m-0 text-center fw-bold">STUDENTS</h4>
+    </div>
+
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="card col-12 col-lg-6 p-0" id="cardAddRatiosList">
+            <div class="card-header list-group-item-dark p-0" id="rowForCollapsingAddStudent" data-toggle="collapse"
+              href="#addStudentFormCardBody">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-6" style="justify-content: left !important;align-items: center; display: flex;">
+                    <h5 class="m-0">Add Student</h5>
+                  </div>
+                  <div class="col-6">
+                    <button class="btn btn-tool" id="btnForCollapsingAddStudent"
+                      style=" padding:0px !important; float:right; font-size: 30px;" type="button"><i
+                        class="bi bi-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body collapse" id="addStudentFormCardBody">
+
+              <form action="/" method="POST" id="addClassForm">
+
+                <div class="form-group">
+                  <label for="name" class="required">Student name</label>
+                  <input type="text" class="form-control" id="" name="name" placeholder="Enter the student of class"
+                    required>
+                </div>
+
+
+                <div class="text-center">
+                  <button class="btn btn-success" type="button" id="createStudent">Create</button>
+                </div>
+
+
+              </form>
+            </div>
+
+          </div>
+
+          <div class="col-12"></div>
+          <br>
+          <!-- asd -->
+          <div class="container-fluid mt-3">
+            <div class="row bg-dark" style="color:white;">
+              <div class="col-3 center-XY" style="border-right: 1px solid white;">Name</div>
+              <div class="col-2 center-XY" style="border-right: 1px solid white;">Surname</div>
+              <div class="col-5 center-XY" style="border-right: 1px solid white;">types answers</div>
+              <div class="col-2 center-XY p-0">#</div>
+            </div>
+            <div class="row alternating-staining list-group-item p-0 " *ngFor="let s of students" style="color:black; display: flex;">
+              <div class="col-3 border_right center-XY">
+                <span class="threeDots"><a data-id="6181b74810c7495794819cda" class="openModalForEditStudent" style="cursor:pointer">{{s.name}}</a></span>
+
+              </div>
+              <div class="col-2 border_right center-XY">
+                <span class="threeDots">{{s.surname}}</span>
+
+              </div>
+              <div class="col-5 border_right center-XY"></div>
+              <div class="col-1 center-XY p-0">
+                <button style="font-size: 16px; color:#17a2b8 !important;" type="button" class="btn btn-tool btnToOpenModalSudent p-0"><i class="bi bi-binoculars-fill"></i></button>
+              </div>
+              <div class="col-1 center-XY p-0">
+                <button style="font-size: 16px; color:#dc3545;" class="btn btn-tool removeStudent p-0"><i class="bi bi-x-circle-fill"></i></button>
+              </div>
+            </div>
+
+
+
+
+          </div>
+          <!-- asdasdas -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
