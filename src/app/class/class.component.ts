@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Class } from "../models/class";
-import { ClassService } from "../services/class.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { ClassService, User } from "./class.service";
 
 @Component({
   selector: "app-class",
@@ -14,13 +14,18 @@ export class ClassComponent implements OnInit {
   createdClass: string;
 
   constructor(
-    private classesService: ClassService,
     private _router: Router,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private classService: ClassService
   ) {}
 
   ngOnInit(): void {
-    this.classesService.getClasses().subscribe((data) => (this.classes = data));
+    // this.classesService.getClasses().subscribe((data) => (this.classes = data));
+    this.addUser({
+      fullName: "Jovica Ilievski",
+      username: "exfled",
+      password: "testing",
+    });
   }
 
   navigateToFirst(id: number) {
@@ -31,5 +36,10 @@ export class ClassComponent implements OnInit {
     console.log(this.nameClass + "NAME OF CLASS");
     this.createdClass = this.nameClass;
     this.nameClass = "";
+  }
+
+  addUser(user: User) {
+    this.classService.getUsers();
+    this.classService.createUser(user);
   }
 }
