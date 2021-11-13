@@ -3,18 +3,13 @@
 
   <div  class="form-logIn" style="margin: 0 auto;">
       <h4 class="text-center">Create Account</h4>
-    <!--<div class="form-group">
-      <label for="exampleInputEmail1">name:</label>
-      <input type="text" class="form-control" id="usernameField" aria-describedby="usernameHelp" [(ngMolel)]="userName" name="username"
-        placeholder="Enter username" required>
 
-    </div>-->
     <div class="form-group">
       <label for="name" class="required">Username: </label>
       <input type="text" class="form-control" [(ngModel)]="userName"  required>
     </div>
     <div class="form-group">
-      <label for="name" class="required">Username: </label>
+      <label for="name" class="required">password: </label>
       <input type="password" class="form-control" [(ngModel)]="userPassword" name="userPassword"  required>
     </div>
 
@@ -23,5 +18,9 @@
       <button class="btn btn-success" (click)="addUser()" type="button">Create</button>
     </div>
     <span class="mdl-textfield__error">{{ message }}</span>
+    <hr>
+    <div class="text-center" >
+      <a href="/create-account/login" style="text-decoration: none !important;" id="goBackBtn">Return to log in</a>
+    </div>
   </div>
 </div>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Class } from "../models/class";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ClassService, User } from "./class.service";
+import { ClassService } from "./class.service";
+import { User } from "../models/user";
 
 @Component({
   selector: "app-class",
@@ -21,11 +22,10 @@ export class ClassComponent implements OnInit {
 
   ngOnInit(): void {
     // this.classesService.getClasses().subscribe((data) => (this.classes = data));
-    this.addUser({
-      fullName: "Jovica Ilievski",
-      username: "exfled",
-      password: "testing",
-    });
+    // this.addUser({
+    //   userName: "exfled",
+    //   password: "testing",
+    // });
   }
 
   navigateToFirst(id: number) {
@@ -38,8 +38,8 @@ export class ClassComponent implements OnInit {
     this.nameClass = "";
   }
 
-  addUser(user: User) {
-    this.classService.getUsers();
-    this.classService.createUser(user);
-  }
+  // addUser(user: User) {
+  //   this.classService.getUsers();
+  //   // this.classService.createUser(user);
+  // }
 }

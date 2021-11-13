@@ -1,6 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { CoreModule } from "./core/core.module";
 import { SharedModule } from "./shared/shared.module";
@@ -20,8 +19,7 @@ import { ClassDetailsComponent } from "./class-details/class-details.component";
 import { AngularFireModule } from "@angular/fire/compat";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { ClassService } from "./services/class.service";
-import { UserComponent } from './user/user.component';
+import { LoginModule } from "./login/login.module";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCdyowCTstNAf4GYM9J1C2IHlHok8QdfUk",
@@ -38,15 +36,15 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
   new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 
 @NgModule({
-  declarations: [AppComponent, ClassComponent, ClassDetailsComponent, UserComponent],
+  declarations: [AppComponent, ClassComponent, ClassDetailsComponent],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
     CoreModule,
     SharedModule,
     HomeModule,
     DetailModule,
+    LoginModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,

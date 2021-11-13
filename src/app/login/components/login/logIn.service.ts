@@ -8,7 +8,7 @@ import { User } from "../../../models/user";
 @Injectable({
   providedIn: "root",
 })
-export class SignUpService {
+export class LogInService {
   private usersCollection: AngularFirestoreCollection<User>;
   constructor(private firestore: AngularFirestore) {
     this.usersCollection = this.firestore.collection<User>("Users");
@@ -20,14 +20,12 @@ export class SignUpService {
     return users;
   }
 
-  async createUser(user: User) {
-    let users = await this.getUsers();
-    let userExist = users.some((u) => u.userName === user.userName);
-    if (!userExist) {
-      let repsonse = await this.usersCollection.add(user);
-      return repsonse;
-    } else {
-      return false;
-    }
+  async loginUser() {
+    console.log(123);
+    // let users = await this.getUsers();
+    // let isUserInDb = users.some((u) => {
+    //   return u.userName === username && u.password === password;
+    // });
+    // console.log(isUserInDb);
   }
 }
