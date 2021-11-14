@@ -1,7 +1,7 @@
 import { Student } from "./student";
 
 export class Class {
-  id: number;
+  id: string;
   name: string;
-  listOfStudents: Student[];
+  userId: string;
 }

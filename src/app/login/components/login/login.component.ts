@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
+import { timeEnd } from "console";
 import { LogInService } from "./LogIn.service";
 
 @Component({
@@ -15,8 +16,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   async loginSubmit() {
-    console.log(312);
-    await this.logInService.loginUser();
+    await this.logInService.loginUser(this.userName, this.userPassword);
     // console.log(this.userName, this.userPassword);
   }
 }

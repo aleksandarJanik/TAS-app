@@ -25,15 +25,15 @@ export class ClassDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((paramMap) => {
-      this.id = +paramMap.get("id");
-    });
-    this.classesService.getClasses().subscribe((data) => {
-      if (data) {
-        this.classes = data;
-        this.currentClass = this.classes.find((c) => c.id === this.id);
-        this.students = this.currentClass.listOfStudents;
-      }
-    });
+    // this.route.paramMap.subscribe((paramMap) => {
+    //   this.id = +paramMap.get("id");
+    // });
+    // this.classesService.getClasses().subscribe((data) => {
+    //   if (data) {
+    //     this.classes = data;
+    //     this.currentClass = this.classes.find((c) => c.id === this.id);
+    //     this.students = this.currentClass.listOfStudents;
+    //   }
+    // });
   }
 }

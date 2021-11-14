@@ -3,27 +3,33 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from "@angular/fire/compat/firestore";
+import { Class } from "../models/class";
 import { User } from "../models/user";
 
 @Injectable({
   providedIn: "root",
 })
 export class ClassService {
-  private usersCollection: AngularFirestoreCollection<User>;
+  private classCollection: AngularFirestoreCollection<Class>;
   constructor(private firestore: AngularFirestore) {
-    this.usersCollection = this.firestore.collection<User>("Classes");
+    this.classCollection = this.firestore.collection<Class>("Class");
   }
 
-  // async getUsers(): Promise<User[]> {
-  //   let repsonse = await this.usersCollection.ref.get();
-  //   let users = repsonse.docs.map((doc) => doc.data());
-  //   console.log(users);
-  //   return users;
-  // }
+  async getClasses(): Promise<Class[]> {
+    let repsonse = await this.classCollection.ref.get();
+    let classes = repsonse.docs.map((doc) => doc.data());
+    return classes;
+  }
 
-  // async createUser(user: User) {
-  //   let repsonse = await this.usersCollection.add(user);
-  //   console.log(repsonse);
-  //   return repsonse;
-  // }
+  async createClass(className: string, user: User) {}
+  async generateRandomId(): Promise<string> {
+    let id = Math.random().toString(36).slice(2);
+    let classes = await this.getClasses();
+    let idExist = classes.some((c) => c.id === id);
+    if (idExist) {
+      this.generateRandomId();
+    } else {
+      return id;
+    }
+  }
 }

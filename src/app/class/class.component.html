@@ -1,5 +1,5 @@
 <br>
-<h1 class="text-center">Welcome to TAS application</h1>
+<h1 class="text-center">Home page</h1>
 <br>
 <!-- <div *ngFor="let c of classes">
 <p (click)="navigateToFirst(c.id)">{{c.name}}</p>
@@ -14,25 +14,25 @@
       <div class="container-fluid">
         <div class="row justify-content-center">
           <div class="card col-12 col-lg-6 p-0" id="cardAddRatiosList">
-            <div class="card-header list-group-item-dark p-0" id="rowForCollapsingAddClass" data-toggle="collapse" href="#addClassFormCardBody">
+            <div class="card-header list-group-item-success p-0" id="rowForCollapsingAddClass" data-toggle="collapse" href="#addClassFormCardBody">
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-6" style="justify-content: left !important;align-items: center; display: flex;">
                     <h5 class="m-0">Add Class</h5>
                   </div>
                   <div class="col-6">
-                    <button class="btn btn-tool" id="btnForCollapsingAddClass" style=" padding:0px !important; float:right; font-size: 30px;" type="button"><i class="bi bi-plus"></i></button>
+                    <button class="btn btn-tool" id="btnForCollapsingAddClass" (click)="collapsingAddClass(elem)" style=" padding:0px !important; float:right; font-size: 30px;" type="button"><i class="bi bi-dash"></i></button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="card-body" id="addClassFormCardBody">
+            <div class="card-body  collapse" id="addClassFormCardBody">
                 <div class="form-group">
                   <label for="name" class="required">Class name</label>
                   <input type="text" class="form-control" [(ngModel)]="nameClass"  name="nameClass"
                     placeholder="Enter the name of class" required>
                 </div>
-
+                <br>
                 <div class="text-center">
                   <button class="btn btn-success" (click)="addClass()" type="button" id="createClass">Create</button>
                 </div>
@@ -58,6 +58,7 @@
     </div>
   </div>
 </div>
+<button class="btn btn-danger" (click)="logOut()" type="button" id="logaOut">Log out</button>
 
 
 
