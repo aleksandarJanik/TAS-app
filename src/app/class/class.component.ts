@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ClassService } from "./class.service";
 import { User } from "../models/user";
 import { LogInService } from "../login/components/login/LogIn.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-class",
@@ -23,8 +24,9 @@ export class ClassComponent implements OnInit {
     private el: ElementRef
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     // this.classesService.getClasses().subscribe((data) => (this.classes = data));
+    this.classes = await this.classService.getClasses();
     // this.addUser({
     //   userName: "exfled",
     //   password: "testing",
@@ -36,7 +38,21 @@ export class ClassComponent implements OnInit {
   }
 
   async addClass() {
-    await this.classService.createClass(this.nameClass, this.logInService.user);
+    let isCreateClass = await this.classService.createClass(
+      this.nameClass,
+      this.logInService.user
+    );
+    if (!isCreateClass) {
+      Swal.fire({
+        text: "The class name alredy exist!!",
+        icon: "info",
+      });
+    } else {
+      Swal.fire({
+        text: "The class successfully created!!",
+        icon: "success",
+      });
+    }
   }
 
   collapsingAddClass() {

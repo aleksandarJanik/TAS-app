@@ -21,11 +21,26 @@ export class ClassService {
     return classes;
   }
 
-  async createClass(className: string, user: User) {}
+  async createClass(className: string, user: User) {
+    let classId = await this.generateRandomId();
+    let classes = await this.getClasses();
+    let classExist = classes.some((c) => c.name === className);
+    if (classExist) {
+      return false;
+    } else {
+      let classObj: Class = {
+        userId: user.id,
+        name: className,
+        classId: classId,
+      };
+      await this.classCollection.add(classObj);
+      return true;
+    }
+  }
   async generateRandomId(): Promise<string> {
     let id = Math.random().toString(36).slice(2);
     let classes = await this.getClasses();
-    let idExist = classes.some((c) => c.id === id);
+    let idExist = classes.some((c) => c.classId === id);
     if (idExist) {
       this.generateRandomId();
     } else {
