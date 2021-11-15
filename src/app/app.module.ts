@@ -20,6 +20,7 @@ import { AngularFireModule } from "@angular/fire/compat";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { LoginModule } from "./login/login.module";
+import { AuthGuardService } from "./guards/auth-guard.service";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCdyowCTstNAf4GYM9J1C2IHlHok8QdfUk",
@@ -56,7 +57,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
       },
     }),
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

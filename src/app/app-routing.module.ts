@@ -6,15 +6,18 @@ import { HomeRoutingModule } from "./home/home-routing.module";
 import { DetailRoutingModule } from "./detail/detail-routing.module";
 import { ClassComponent } from "./class/class.component";
 import { ClassDetailsComponent } from "./class-details/class-details.component";
+import { AuthGuardService } from "./guards/auth-guard.service";
 
 const routes: Routes = [
   {
     path: "class/:id",
     component: ClassDetailsComponent,
+    canActivate : [AuthGuardService]
   },
   {
     path: "class",
     component: ClassComponent,
+    canActivate : [AuthGuardService]
   },
   {
     path: "",

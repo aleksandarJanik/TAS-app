@@ -48,6 +48,8 @@ export class LogInService {
     });
     if (userFromDb) {
       this.user = userFromDb;
+      localStorage.setItem("userId", userFromDb.id);
+      localStorage.setItem("userName", userFromDb.userName);
       let sessionId: Sessions = { sessionId: userName + password };
       await this.createSession(sessionId);
       this.router.navigateByUrl("/class");
