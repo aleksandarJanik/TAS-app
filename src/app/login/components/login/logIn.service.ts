@@ -43,11 +43,11 @@ export class LogInService {
 
   async loginUser(userName, password) {
     let users = await this.getUsers();
-    let user = users.find((u) => {
+    let userFromDb = users.find((u) => {
       return u.userName === userName && u.password === password;
     });
-    if (user) {
-      this.user = user;
+    if (userFromDb) {
+      this.user = userFromDb;
       let sessionId: Sessions = { sessionId: userName + password };
       await this.createSession(sessionId);
       this.router.navigateByUrl("/class");

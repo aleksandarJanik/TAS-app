@@ -3,21 +3,29 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from "@angular/fire/compat/firestore";
+import { LogInService } from "../login/components/login/LogIn.service";
 import { Class } from "../models/class";
 import { User } from "../models/user";
+import { ClassComponent } from "./class.component";
 
 @Injectable({
   providedIn: "root",
 })
 export class ClassService {
   private classCollection: AngularFirestoreCollection<Class>;
-  constructor(private firestore: AngularFirestore) {
+  constructor(
+    private firestore: AngularFirestore,
+    private logInService: LogInService
+  ) {
     this.classCollection = this.firestore.collection<Class>("Class");
   }
 
   async getClasses(): Promise<Class[]> {
     let repsonse = await this.classCollection.ref.get();
-    let classes = repsonse.docs.map((doc) => doc.data());
+    console.log(this.logInService.user);
+    let classes = repsonse.docs
+      .map((doc) => doc.data())
+      .filter((c) => c.userId === this.logInService.user.id);
     return classes;
   }
 

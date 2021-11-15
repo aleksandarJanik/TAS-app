@@ -25,12 +25,7 @@ export class ClassComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // this.classesService.getClasses().subscribe((data) => (this.classes = data));
     this.classes = await this.classService.getClasses();
-    // this.addUser({
-    //   userName: "exfled",
-    //   password: "testing",
-    // });
   }
 
   navigateToFirst(id: number) {
@@ -53,6 +48,7 @@ export class ClassComponent implements OnInit {
         icon: "success",
       });
     }
+    this.nameClass = "";
   }
 
   collapsingAddClass() {
