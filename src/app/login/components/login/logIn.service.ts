@@ -41,6 +41,15 @@ export class LogInService {
     }
   }
 
+  async logout() {
+    let users = await this.getUsers();
+    let user = users.find((u) => u.userName === localStorage.userName);
+    const res = await this.usersSession.ref.get();
+    res.docs
+      .find((el) => el.data().sessionId === user.userName + user.password)
+      .ref.delete();
+  }
+
   async loginUser(userName, password) {
     let users = await this.getUsers();
     let userFromDb = users.find((u) => {

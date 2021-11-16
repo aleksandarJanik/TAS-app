@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 export class ClassComponent implements OnInit {
   classes: Class[];
   nameClass: string;
+  userName: string;
   public show: boolean = true;
 
   constructor(
@@ -26,6 +27,7 @@ export class ClassComponent implements OnInit {
 
   async ngOnInit() {
     this.classes = await this.classService.getClasses();
+    this.userName = localStorage.userName;
   }
 
   navigateToFirst(id: number) {
@@ -33,22 +35,20 @@ export class ClassComponent implements OnInit {
   }
 
   async addClass() {
-    let isCreateClass = await this.classService.createClass(
-      this.nameClass,
-      this.logInService.user
-    );
+    let isCreateClass = await this.classService.createClass(this.nameClass);
     if (!isCreateClass) {
       Swal.fire({
         text: "The class name alredy exist!!",
         icon: "info",
       });
     } else {
-      Swal.fire({
+      let swal = Swal.fire({
         text: "The class successfully created!!",
         icon: "success",
       });
     }
     this.nameClass = "";
+    this.classes = await this.classService.getClasses();
   }
 
   collapsingAddClass() {
@@ -73,7 +73,13 @@ export class ClassComponent implements OnInit {
     }
   }
 
-  logOut() {
+  async logOut() {
+    await this.logInService.logout();
     this._router.navigateByUrl("/create-account/login");
+  }
+
+  async deleteClass(classId) {
+    await this.classService.deleteClass(classId);
+    this.classes = await this.classService.getClasses();
   }
 }
