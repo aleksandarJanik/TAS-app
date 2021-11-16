@@ -1,3 +1,4 @@
+import { StringLiteralLike } from "typescript";
 import { Student } from "./student";
 
 export class Class {

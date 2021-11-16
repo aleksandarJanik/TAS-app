@@ -30,8 +30,8 @@ export class ClassComponent implements OnInit {
     this.userName = localStorage.userName;
   }
 
-  navigateToFirst(id: number) {
-    this._router.navigate([id + ""], { relativeTo: this._activatedRoute });
+  navigateToFirst(id: string) {
+    this._router.navigate(['/class', id]);
   }
 
   async addClass() {

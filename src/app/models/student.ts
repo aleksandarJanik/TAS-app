@@ -1,8 +1,7 @@
 import { TypeAnswer } from "./typeAnswer";
 
 export class Student {
-  id: number;
+  classId: string;
   name: string;
-  surname: string;
-  typeAnswers: TypeAnswer[];
+  studentId: string;
 }
