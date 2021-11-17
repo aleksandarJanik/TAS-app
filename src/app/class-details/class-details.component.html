@@ -14,7 +14,8 @@
   <div class="card" style="min-height: 70%;">
     <div class="card-header" >
       <h4 class="m-0 text-center fw-bold">
-        <button class="btn btn-success" style="float: left;">START LECTURING</button>
+        <button class="btn btn-success" (click)="pickStudent()" style="float: left;">START LECTURING</button>
+        {{'picked student ' + pickedStudentName}}
         <span style="vertical-align: middle;margin-right: 20px;">STUDENTS</span>
         <button class="btn btn-tool" id="backToClassesBtn" (click)="redirectToClasses()" style="float: right;"><i class="bi bi-arrow-left-circle-fill" style="margin-right: 2px;"></i>Back to classes</button></h4>
     </div>
@@ -67,20 +68,26 @@
           <div class="container-fluid mt-3">
             <div class="row bg-dark" style="color:white;">
               <div class="col-3 center-XY" style="border-right: 1px solid white;">Name/Surname</div>
-              <div class="col-7 center-XY p-0" style="border-right: 1px solid white;">Аctivities</div>
-              <div class="col-2 center-XY p-0">#</div>
+              <div class="col-3 center-XY p-0" style="border-right: 1px solid white;">Аctivities</div>
+              <div class="col-3 center-XY p-0"> sadasd </div>
+              <div class="col-3 center-XY p-0">Present in class</div>
             </div>
-            <div class="row alternating-staining list-group-item p-0 " *ngFor="let s of students" style="color:black; display: flex;">
+            <div class="row alternating-staining list-group-item p-0 " *ngFor="let s of startLecturing" style="color:black; display: flex;">
               <div class="col-3 border_right center-XY">
-                <span class="threeDots"><b>{{s.name}}</b></span>
-
+                <span class="threeDots"><b>{{s.student.name}}</b></span>
               </div>
-              <div class="col-7 border_right center-XY"></div>
-              <div class="col-1 center-XY p-0">
-                <button style="font-size: 16px; color:#17a2b8 !important;" type="button" class="btn btn-tool btnToOpenModalSudent p-0"><i class="bi bi-binoculars-fill"></i></button>
+              <div class="col-3 border_right center-XY">
               </div>
-              <div class="col-1 center-XY p-0">
-                <button style="font-size: 16px; color:#dc3545;" (click)="removeStudent(s.studentId)" class="btn btn-tool removeStudent p-0"><i class="bi bi-x-circle-fill"></i></button>
+              <div class="col-3 center-XY p-0">
+                <div class="col-6 center-XY p-0">
+                  <button style="font-size: 16px; color:#17a2b8 !important;" type="button" class="btn btn-tool btnToOpenModalSudent p-0"><i class="bi bi-binoculars-fill"></i></button>
+                </div>
+                <div class="col-6 center-XY p-0">
+                  <button style="font-size: 16px; color:#dc3545;" (click)="removeStudent(s.student.studentId)" class="btn btn-tool removeStudent p-0"><i class="bi bi-x-circle-fill"></i></button>
+                </div>
+              </div>
+              <div class="col-3 border_right center-XY">
+                <input type="checkbox" [(ngModel)]="s.isPresent" (change)="checkValue(this.s)" />
               </div>
             </div>
 
