@@ -7,6 +7,7 @@ import {
 import Swal from "sweetalert2";
 import { StringLiteralLike } from "typescript";
 import { LogInService } from "../login/components/login/LogIn.service";
+import { Answer } from "../models/answer";
 import { Class } from "../models/class";
 import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
@@ -31,6 +32,11 @@ export class ClassDetailsComponent implements OnInit {
   studentNameSurname: string;
   counter: number = 0;
   public show: boolean = true;
+  messageForLecturing: string = '';
+  isLecturingStarted: boolean = false;
+  answerTypes: string[] = ['test', 'usno', 'pismeno'];
+  gradeForAnswer: string = '';
+  selectedAnswerType: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -110,21 +116,45 @@ export class ClassDetailsComponent implements OnInit {
     student.isPresent = !!student.isPresent;
   }
 
+  startClassLecturing(): void {
+    this.isLecturingStarted = !this.isLecturingStarted;
+  }
+
   pickStudent(): void {
-    let removed: StartLecturing[];
     if (this.counter === 0) {
       this.presentStudents = this.startLecturing.filter( s => s.isPresent === true);
       this.copyPresentStudents = [...this.presentStudents];
       this.counter++;
     }
-    const rndInt = Math.floor(Math.random() * this.presentStudents.length) + 1;
-    this.pickedStudent = this.presentStudents[rndInt - 1];
-    this.pickedStudentName = this.pickedStudent.student.name;
-    if (this.presentStudents.length === 1){
-      this.presentStudents = [];
-    } else {
-      this.presentStudents = this.presentStudents.splice(rndInt - 1, 1);
+    if (this.presentStudents.length >= 1) {
+      const rndInt = Math.floor(Math.random() * this.presentStudents.length) + 1;
+      this.pickedStudent = this.presentStudents[rndInt - 1];
+      this.pickedStudentName = this.pickedStudent.student.name;
+      if (this.presentStudents.length === 1){
+        this.presentStudents = [];
+      } else {
+        this.presentStudents.splice(rndInt - 1, 1);
+      }
+      console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
     }
-    console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
+    else {
+      this.messageForLecturing = 'All students are asked !!!';
+      this.pickedStudentName = '';
+    }
+  }
+
+  onSelected(answerType: string): void {
+    this.selectedAnswerType = answerType;
+  }
+
+  addGrade(): void{
+    let studentAnswered: Answer = {
+      typeAnswer: this.selectedAnswerType,
+      gradeAnswer: this.gradeForAnswer,
+      dateAnswered: new Date(),
+      answerId: '123455o0sd'
+    };
+    console.log("Answe for student " + JSON.stringify(studentAnswered));
+    this.gradeForAnswer = '';
   }
 }
