@@ -1,21 +1,33 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Student } from '../models/student';
+import { Injectable } from "@angular/core";
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from "@angular/fire/compat/firestore";
+import { Student } from "../models/student";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class StudentService {
   private studentCollection: AngularFirestoreCollection<Student>;
 
   constructor(private firestore: AngularFirestore) {
     this.studentCollection = this.firestore.collection<Student>("Student");
-   }
+  }
 
-   async getStudentsByClass(classId: string): Promise<Student[]> {
+  async getStudentsByClass(classId: string): Promise<Student[]> {
     let repsonse = await this.studentCollection.ref.get();
-    let students = repsonse.docs.map((doc) => doc.data()).filter( (c) => c.classId === classId);
+    let students = repsonse.docs
+      .map((doc) => doc.data())
+      .filter((c) => c.classId === classId);
     return students;
+  }
+
+  async getNumberOfStudentsPerClass(classId: string) {
+    let repsonseSt = await this.studentCollection.ref.get();
+    return repsonseSt.docs
+      .map((doc) => doc.data())
+      .filter((c) => c.classId === classId).length;
   }
 
   async getStudents(): Promise<Student[]> {
@@ -24,13 +36,18 @@ export class StudentService {
     return students;
   }
 
+  async deleteStudent(studentId) {
+    let res = await this.studentCollection.ref.get();
+    res.docs.find((c) => c.data().studentId === studentId).ref.delete();
+  }
+
   async createStudent(studentName: string, classId: string) {
     let studentId = await this.generateRandomId();
 
     let studentObj: Student = {
       classId: classId,
       name: studentName,
-      studentId: studentId
+      studentId: studentId,
     };
 
     let repsonse = await this.studentCollection.add(studentObj);
@@ -46,5 +63,4 @@ export class StudentService {
       return id;
     }
   }
-
 }

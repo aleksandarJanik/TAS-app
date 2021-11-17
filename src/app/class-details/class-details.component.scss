@@ -23,3 +23,15 @@ li::before {
 .alternating-staining:nth-child(even) {
   background: white !important;
 }
+#logaOut {
+  position: fixed;
+  right: 50px;
+  bottom: 80px;
+}
+#backToClassesBtn:hover {
+  opacity: 1;
+  font-weight: bold;
+}
+#backToClassesBtn {
+  opacity: 0.8;
+}

@@ -31,7 +31,7 @@ export class ClassComponent implements OnInit {
   }
 
   navigateToFirst(id: string) {
-    this._router.navigate(['/class', id]);
+    this._router.navigate(["/class", id]);
   }
 
   async addClass() {
@@ -81,5 +81,9 @@ export class ClassComponent implements OnInit {
   async deleteClass(classId) {
     await this.classService.deleteClass(classId);
     this.classes = await this.classService.getClasses();
+    let swal = Swal.fire({
+      text: "The class successfully removed!!",
+      icon: "success",
+    });
   }
 }

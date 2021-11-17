@@ -48,6 +48,10 @@ export class LogInService {
     res.docs
       .find((el) => el.data().sessionId === user.userName + user.password)
       .ref.delete();
+    let swal = Swal.fire({
+      text: "You have been successfully logged out!!",
+      icon: "success",
+    });
   }
 
   async loginUser(userName, password) {

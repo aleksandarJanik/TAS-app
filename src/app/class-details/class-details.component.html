@@ -1,23 +1,29 @@
 <!-- <div *ngFor="let s of students">
   <p>{{s.name}}</p>
 </div> -->
+<div class="bg-dark text-white">
 <br>
-<h1 class="text-center">TAS application</h1>
+<h1 class="text-center">Class details</h1>
 <br>
+</div>
+
 <!-- <div *ngFor="let c of classes">
 <p (click)="navigateToFirst(c.id)">{{c.name}}</p>
 </div> -->
-<div class="container-fluid">
-  <div class="card">
-    <div class="card-header">
-      <h4 class="m-0 text-center fw-bold">STUDENTS</h4>
+<div class="container-fluid bg-dark" style="height: 100%;">
+  <div class="card" style="min-height: 70%;">
+    <div class="card-header" >
+      <h4 class="m-0 text-center fw-bold">
+        <button class="btn btn-success" style="float: left;">START LECTURING</button>
+        <span style="vertical-align: middle;margin-right: 20px;">STUDENTS</span>
+        <button class="btn btn-tool" id="backToClassesBtn" (click)="redirectToClasses()" style="float: right;"><i class="bi bi-arrow-left-circle-fill" style="margin-right: 2px;"></i>Back to classes</button></h4>
     </div>
 
     <div class="card-body">
       <div class="container-fluid">
         <div class="row justify-content-center">
           <div class="card col-12 col-lg-6 p-0" id="cardAddRatiosList">
-            <div class="card-header list-group-item-dark p-0" id="rowForCollapsingAddStudent" data-toggle="collapse"
+            <div class="card-header list-group-item-success p-0" id="rowForCollapsingAddStudent" (click)="collapsingAddStudent()" style="cursor: pointer;" data-toggle="collapse"
               href="#addStudentFormCardBody">
               <div class="container-fluid">
                 <div class="row">
@@ -26,22 +32,21 @@
                   </div>
                   <div class="col-6">
                     <button class="btn btn-tool" id="btnForCollapsingAddStudent"
-                      style=" padding:0px !important; float:right; font-size: 30px;" type="button"><i
-                        class="bi bi-plus"></i></button>
+                      style=" padding:0px !important; float:right; font-size: 30px;" type="button"><i class="bi bi-dash"></i></button>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="card-body " id="addStudentFormCardBody">
+            <div class="card-body collapse" id="addStudentFormCardBody">
 
               <form action="/" method="POST" id="addClassForm">
 
                 <div class="form-group">
-                  <label for="name" class="required">Student name</label>
-                  <input type="text" class="form-control" [(ngModel)]="studentNameSurname"  name="studentNameSurname" placeholder="Enter the student of class"
+                  <label for="name" class="required">Student name and surname</label>
+                  <input type="text" class="form-control" [(ngModel)]="studentNameSurname"  name="studentNameSurname" placeholder="Enter the student name and surname"
                     required>
                 </div>
-
+<br>
                 <div class="text-center">
                   <button class="btn btn-success" (click)="addStudent()" type="button" id="createStudent">Create</button>
                 </div>
@@ -52,25 +57,30 @@
 
           </div>
 
+          <div class="">
+            <br>
+            <input type="text" class="form-control" style="width:30rem; margin: 0 auto;" placeholder="Search students...">
+          </div>
           <div class="col-12"></div>
           <br>
           <!-- asd -->
           <div class="container-fluid mt-3">
             <div class="row bg-dark" style="color:white;">
               <div class="col-3 center-XY" style="border-right: 1px solid white;">Name/Surname</div>
+              <div class="col-7 center-XY p-0" style="border-right: 1px solid white;">Аctivities</div>
               <div class="col-2 center-XY p-0">#</div>
             </div>
             <div class="row alternating-staining list-group-item p-0 " *ngFor="let s of students" style="color:black; display: flex;">
               <div class="col-3 border_right center-XY">
-                <span class="threeDots"><a data-id="6181b74810c7495794819cda" class="openModalForEditStudent" style="cursor:pointer">{{s.name}}</a></span>
+                <span class="threeDots"><b>{{s.name}}</b></span>
 
               </div>
-              <div class="col-5 border_right center-XY"></div>
+              <div class="col-7 border_right center-XY"></div>
               <div class="col-1 center-XY p-0">
                 <button style="font-size: 16px; color:#17a2b8 !important;" type="button" class="btn btn-tool btnToOpenModalSudent p-0"><i class="bi bi-binoculars-fill"></i></button>
               </div>
               <div class="col-1 center-XY p-0">
-                <button style="font-size: 16px; color:#dc3545;" class="btn btn-tool removeStudent p-0"><i class="bi bi-x-circle-fill"></i></button>
+                <button style="font-size: 16px; color:#dc3545;" (click)="removeStudent(s.studentId)" class="btn btn-tool removeStudent p-0"><i class="bi bi-x-circle-fill"></i></button>
               </div>
             </div>
 
@@ -85,4 +95,4 @@
   </div>
 </div>
 
-
+<button class="btn btn-danger" (click)="logOut()" type="button" id="logaOut">Log out</button>
