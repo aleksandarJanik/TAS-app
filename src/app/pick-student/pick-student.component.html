@@ -1,2 +1,20 @@
-
-<div (window:resize)="onResize($event)">dsadsa</div>
+<div>
+    <button class="btn btn-success" (click)="pickStudent()" style="float: left;">{{pickedStudentName ? pickedStudentName : 'PICK STUDENT'}}</button>
+    {{messageForLecturing ? messageForLecturing : ''}}
+    <div *ngIf="!messageForLecturing">
+        <select  class="form-control"
+                (change)="onSelected($event.target.value)">
+            <option value="izberi">- Choose answer -</option>
+            <option *ngFor="let answer of answerTypes"
+                    [value]="answer">{{ answer }}</option>
+        </select>
+        <div class="form-group">
+            <label for="gradeForAnswer" class="required">Student grade</label>
+            <input type="text" class="form-control" [(ngModel)]="gradeForAnswer"  name="gradeForAnswer" placeholder="Grade for answer"
+            required>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-success" (click)="addGrade()" type="button" id="createStudent">Add Grade</button>
+        </div>
+    </div>
+</div>

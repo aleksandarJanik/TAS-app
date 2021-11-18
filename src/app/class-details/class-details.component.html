@@ -18,32 +18,7 @@
         <button class="btn btn-tool" id="backToClassesBtn" (click)="redirectToClasses()" style="float: right;"><i class="bi bi-arrow-left-circle-fill" style="margin-right: 2px;"></i>Back to classes</button></h4>
     </div>
     <div>
-      <div *ngIf="!isLecturingStarted">
         <button class="btn btn-success" (click)="startClassLecturing()" style="float: left;">START LECTURING</button>
-      </div>
-      <a href="http://localhost:4200/pick" target="_blank">WEBSITE</a>
-      <div *ngIf="isLecturingStarted">
-        <div>
-          <button class="btn btn-success" (click)="pickStudent()" style="float: left;">{{pickedStudentName ? pickedStudentName : 'PICK STUDENT'}}</button>
-          {{messageForLecturing ? messageForLecturing : ''}}
-          <div *ngIf="pickedStudentName">
-            <select  class="form-control"
-                  (change)="onSelected($event.target.value)">
-            <option value="izberi">- Choose answer -</option>
-            <option *ngFor="let answer of answerTypes"
-                    [value]="answer">{{ answer }}</option>
-          </select>
-          <div class="form-group">
-            <label for="gradeForAnswer" class="required">Student grade</label>
-            <input type="text" class="form-control" [(ngModel)]="gradeForAnswer"  name="gradeForAnswer" placeholder="Grade for answer"
-            required>
-          </div>
-          <div class="text-center">
-            <button class="btn btn-success" (click)="addGrade()" type="button" id="createStudent">Add Grade</button>
-          </div>
-          </div>
-        </div>
-      </div>
     </div>
     <div class="card-body">
       <div class="container-fluid">

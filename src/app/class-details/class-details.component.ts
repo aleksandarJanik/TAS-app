@@ -117,7 +117,11 @@ export class ClassDetailsComponent implements OnInit {
   }
 
   startClassLecturing(): void {
-    this.isLecturingStarted = !this.isLecturingStarted;
+    this.presentStudents = this.startLecturing.filter( s => s.isPresent === true);
+    this.studentService.presentStudents = this.presentStudents;
+    localStorage.setItem("presentStudents", JSON.stringify(this.presentStudents));
+    // console.log(JSON.stringify(this.presentStudents));
+    window.open('http://localhost:4200/pick', '_blank');
   }
 
   pickStudent(): void {

@@ -3,6 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from "@angular/fire/compat/firestore";
+import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
 
 @Injectable({
@@ -10,6 +11,7 @@ import { Student } from "../models/student";
 })
 export class StudentService {
   private studentCollection: AngularFirestoreCollection<Student>;
+  public presentStudents: StartLecturing[];
 
   constructor(private firestore: AngularFirestore) {
     this.studentCollection = this.firestore.collection<Student>("Student");
