@@ -11,6 +11,7 @@ import { Class } from "../models/class";
 import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
 import { StudentService } from "../services/student.service";
+import { ElectronService } from "../core/services/electron/electron.service";
 
 @Component({
   selector: "app-class-details",
@@ -43,7 +44,8 @@ export class ClassDetailsComponent implements OnInit {
     private studentService: StudentService,
     private logInService: LogInService,
     private _router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private electronService: ElectronService
   ) {}
 
   async ngOnInit() {
@@ -129,7 +131,14 @@ export class ClassDetailsComponent implements OnInit {
       JSON.stringify(this.presentStudents)
     );
     // console.log(JSON.stringify(this.presentStudents));
-    window.open("http://localhost:4200/pick", "_blank");
+    // let childWindow = window.open("http://localhost:4200/pick", "_blank");
+    const BrowserWindow = this.electronService.remote.BrowserWindow;
+    let childWindow = new BrowserWindow({
+      resizable: false,
+      alwaysOnTop: true,
+      minimizable: false,
+    });
+    childWindow.loadURL("http://localhost:4200/pick");
   }
 
   pickStudent(): void {
