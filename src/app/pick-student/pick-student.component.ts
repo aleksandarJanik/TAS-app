@@ -18,6 +18,7 @@ export class PickStudentComponent implements OnInit {
   selectedAnswerType: string = "";
   showButtons: boolean = false;
   answerTypes: string[] = ["test", "usno", "pismeno"];
+  working: boolean = false;
 
   constructor(private studentService: StudentService) {}
 
@@ -30,27 +31,32 @@ export class PickStudentComponent implements OnInit {
   }
 
   async pickStudent() {
-    if (this.presentStudents.length >= 1) {
-      const rndInt =
-        Math.floor(Math.random() * this.presentStudents.length) + 1;
-      this.pickedStudent = this.presentStudents[rndInt - 1];
-      this.pickedStudentName = this.pickedStudent.student.name;
-      if (this.presentStudents.length === 1) {
-        this.presentStudents = [];
+    this.working = true;
+    setTimeout(() => {
+      if (this.presentStudents.length >= 1) {
+        const rndInt =
+          Math.floor(Math.random() * this.presentStudents.length) + 1;
+        this.pickedStudent = this.presentStudents[rndInt - 1];
+        this.pickedStudentName = this.pickedStudent.student.name;
+        if (this.presentStudents.length === 1) {
+          this.presentStudents = [];
+        } else {
+          this.presentStudents.splice(rndInt - 1, 1);
+        }
+        // console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
+        this.showButtons = true;
+        this.working = false;
       } else {
-        this.presentStudents.splice(rndInt - 1, 1);
+        window.close();
+        this.studentService.selectedMessageChanged("All students were asked once!!");
+        let swal = Swal.fire({
+          text: "All students were asked once!!",
+          icon: "success",
+        });
+        this.working = false;
+        // alert("All students were asked once!!");
       }
-      console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
-      this.showButtons = true;
-    } else {
-      window.close();
-      this.studentService.selectedMessageChanged("All students were asked once!!");
-      let swal = Swal.fire({
-        text: "All students were asked once!!",
-        icon: "success",
-      });
-      // alert("All students were asked once!!");
-    }
+    }, 1300);
   }
   async positiveResponse() {
     let studentId = this.pickedStudent.student.studentId;
