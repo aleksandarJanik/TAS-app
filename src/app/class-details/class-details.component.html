@@ -14,12 +14,11 @@
   <div class="card" style="min-height: 70%;">
     <div class="card-header" >
       <h4 class="m-0 text-center fw-bold">
+        <button class="btn btn-success" (click)="startClassLecturing()" style="float: left;">START LECTURING</button>
         <span style="vertical-align: middle;margin-right: 20px;">STUDENTS</span>
         <button class="btn btn-tool" id="backToClassesBtn" (click)="redirectToClasses()" style="float: right;"><i class="bi bi-arrow-left-circle-fill" style="margin-right: 2px;"></i>Back to classes</button></h4>
     </div>
-    <div>
-        <button class="btn btn-success" (click)="startClassLecturing()" style="float: left;">START LECTURING</button>
-    </div>
+
     <div class="card-body">
       <div class="container-fluid">
         <div class="row justify-content-center">
@@ -60,27 +59,28 @@
 
           <div class="">
             <br>
-            <input type="text" class="form-control" style="width:30rem; margin: 0 auto;" placeholder="Search students...">
+            <input type="text" class="form-control" [(ngModel)]="searchText" autocomplete="off" style="width:30rem; margin: 0 auto;" placeholder="Search students...">
           </div>
           <div class="col-12"></div>
           <br>
           <!-- asd -->
           <div class="container-fluid mt-3">
             <div class="row bg-dark" style="color:white;">
-              <div class="col-1 center-XY p-0">Present in class</div>
+              <div class="col-1 center-XY   p-0" style="border-right: 1px solid white;"><div class="threeDots">Present in class</div></div>
               <div class="col-3 center-XY" style="border-right: 1px solid white;">Name/Surname</div>
               <div class="col-6 center-XY p-0" style="border-right: 1px solid white;">Аctivities</div>
               <div class="col-2 center-XY p-0"> sadasd </div>
 
             </div>
-            <div class="row alternating-staining list-group-item p-0 " *ngFor="let s of startLecturing" style="color:black; display: flex;">
+            <div class="row alternating-staining list-group-item p-0 " *ngFor="let s of startLecturing  | filter:searchText" style="color:black; display: flex;">
               <div class="col-1 border_right center-XY">
                 <input type="checkbox" [(ngModel)]="s.isPresent" (change)="checkValue(this.s)" />
               </div>
               <div class="col-3 border_right center-XY">
                 <span class="threeDots"><b>{{s.student.name}}</b></span>
               </div>
-              <div class="col-6 border_right center-XY">
+              <div class="col-6 border_right center-XY" style="justify-content: left;">
+                {{s.student.typeAnswer}}
               </div>
               <div class="col-2 center-XY p-0">
                 <div class="col-6 center-XY p-0">

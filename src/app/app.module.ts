@@ -22,6 +22,7 @@ import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
 import { LoginModule } from "./login/login.module";
 import { AuthGuardService } from "./guards/auth-guard.service";
 import { PickStudentComponent } from "./pick-student/pick-student.component";
+import { Ng2SearchPipeModule } from "ng2-search-filter";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCdyowCTstNAf4GYM9J1C2IHlHok8QdfUk",
@@ -55,6 +56,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
+    Ng2SearchPipeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

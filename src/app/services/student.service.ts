@@ -32,6 +32,14 @@ export class StudentService {
       .filter((c) => c.classId === classId).length;
   }
 
+  async getStudentById(studentId) {
+    let repsonse = await this.studentCollection.ref.get();
+    let student = repsonse.docs
+      .map((doc) => doc.data())
+      .find((st) => st.studentId == studentId);
+    return student;
+  }
+
   async getStudents(): Promise<Student[]> {
     let repsonse = await this.studentCollection.ref.get();
     let students = repsonse.docs.map((doc) => doc.data());
@@ -50,6 +58,7 @@ export class StudentService {
       classId: classId,
       name: studentName,
       studentId: studentId,
+      typeAnswer: "",
     };
 
     let repsonse = await this.studentCollection.add(studentObj);
@@ -64,5 +73,17 @@ export class StudentService {
     } else {
       return id;
     }
+  }
+
+  async uploadStudentAnswer(studentId, answer: string) {
+    let res = await this.studentCollection.ref.get();
+    let student = await this.getStudentById(studentId);
+    console.log(student);
+    const updatedTypeAnswer = student.typeAnswer + answer;
+    console.log("updatedTypeAnswer: ", student.typeAnswer, answer);
+    console.log(student);
+    res.docs
+      .find((c) => c.data().studentId === studentId)
+      .ref.update({ typeAnswer: updatedTypeAnswer });
   }
 }

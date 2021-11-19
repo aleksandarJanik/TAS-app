@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { Answer } from "../models/answer";
 import { StartLecturing } from "../models/startLecturing";
+import Swal from "sweetalert2";
+import { StudentService } from "../services/student.service";
+import { TypeAnswer } from "../models/student";
 
 @Component({
   selector: "app-pick-student",
@@ -11,43 +13,52 @@ export class PickStudentComponent implements OnInit {
   presentStudents: StartLecturing[];
   pickedStudent: StartLecturing;
   pickedStudentName: string;
-  messageForLecturing: string = '';
-  gradeForAnswer: string = '';
-  selectedAnswerType: string = '';
-  answerTypes: string[] = ['test', 'usno', 'pismeno'];
+  messageForLecturing: string = "";
+  gradeForAnswer: string = "";
+  selectedAnswerType: string = "";
+  showButtons: boolean = false;
+  answerTypes: string[] = ["test", "usno", "pismeno"];
 
-  constructor() {}
+  constructor(private studentService: StudentService) {}
 
   ngOnInit(): void {
-    this.presentStudents = JSON.parse(localStorage.getItem("presentStudents") || "[]");
+    this.presentStudents = JSON.parse(
+      localStorage.getItem("presentStudents") || "[]"
+    );
     console.log(JSON.stringify(this.presentStudents));
+    window.resizeTo(320, 180);
   }
 
-  pickStudent(): void {
+  async pickStudent() {
     if (this.presentStudents.length >= 1) {
-      const rndInt = Math.floor(Math.random() * this.presentStudents.length) + 1;
+      const rndInt =
+        Math.floor(Math.random() * this.presentStudents.length) + 1;
       this.pickedStudent = this.presentStudents[rndInt - 1];
       this.pickedStudentName = this.pickedStudent.student.name;
-      if (this.presentStudents.length === 1){
+      if (this.presentStudents.length === 1) {
         this.presentStudents = [];
       } else {
         this.presentStudents.splice(rndInt - 1, 1);
       }
       console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
-    }
-    else {
-      this.messageForLecturing = 'All students are asked !!!';
-      this.pickedStudentName = '';
+      this.showButtons = true;
+    } else {
+      window.close();
+      let swal = Swal.fire({
+        text: "All students were asked once!!",
+        icon: "success",
+      });
+      alert("All students were asked once!!");
     }
   }
-  addGrade(): void{
-    let studentAnswered: Answer = {
-      typeAnswer: this.selectedAnswerType,
-      gradeAnswer: this.gradeForAnswer,
-      dateAnswered: new Date(),
-      answerId: '123455o0sd'
-    };
-    console.log("Answe for student " + JSON.stringify(studentAnswered));
-    this.gradeForAnswer = '';
+  async positiveResponse() {
+    let studentId = this.pickedStudent.student.studentId;
+    await this.studentService.uploadStudentAnswer(studentId, TypeAnswer.PLUS);
+    this.showButtons = false;
+  }
+  async negativeResponse() {
+    let studentId = this.pickedStudent.student.studentId;
+    await this.studentService.uploadStudentAnswer(studentId, TypeAnswer.MINUS);
+    this.showButtons = false;
   }
 }

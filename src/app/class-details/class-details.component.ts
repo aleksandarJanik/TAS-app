@@ -7,11 +7,9 @@ import {
 import Swal from "sweetalert2";
 import { StringLiteralLike } from "typescript";
 import { LogInService } from "../login/components/login/LogIn.service";
-import { Answer } from "../models/answer";
 import { Class } from "../models/class";
 import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
-import { ClassService } from "../services/class.service";
 import { StudentService } from "../services/student.service";
 
 @Component({
@@ -29,14 +27,16 @@ export class ClassDetailsComponent implements OnInit {
   copyPresentStudents: StartLecturing[];
   pickedStudent: StartLecturing;
   pickedStudentName: string;
+  pickedStudentId: string;
   studentNameSurname: string;
   counter: number = 0;
   public show: boolean = true;
-  messageForLecturing: string = '';
+  messageForLecturing: string = "";
   isLecturingStarted: boolean = false;
-  answerTypes: string[] = ['test', 'usno', 'pismeno'];
-  gradeForAnswer: string = '';
-  selectedAnswerType: string = '';
+  answerTypes: string[] = ["test", "usno", "pismeno"];
+  gradeForAnswer: string = "";
+  selectedAnswerType: string = "";
+  searchText;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,11 +52,14 @@ export class ClassDetailsComponent implements OnInit {
       this.students = await this.studentService.getStudentsByClass(
         this.classId
       );
-      this.startLecturing = this.students.map( s => ({
-        student: s,
-        isPresent: true,
-        isPicked: false
-      }) as StartLecturing)
+      this.startLecturing = this.students.map(
+        (s) =>
+          ({
+            student: s,
+            isPresent: true,
+            isPicked: false,
+          } as StartLecturing)
+      );
       // console.log("start lecturing Object " + JSON.stringify(this.startLecturing));
     }
   }
@@ -117,33 +120,42 @@ export class ClassDetailsComponent implements OnInit {
   }
 
   startClassLecturing(): void {
-    this.presentStudents = this.startLecturing.filter( s => s.isPresent === true);
+    this.presentStudents = this.startLecturing.filter(
+      (s) => s.isPresent === true
+    );
     this.studentService.presentStudents = this.presentStudents;
-    localStorage.setItem("presentStudents", JSON.stringify(this.presentStudents));
+    localStorage.setItem(
+      "presentStudents",
+      JSON.stringify(this.presentStudents)
+    );
     // console.log(JSON.stringify(this.presentStudents));
-    window.open('http://localhost:4200/pick', '_blank');
+    window.open("http://localhost:4200/pick", "_blank");
   }
 
   pickStudent(): void {
     if (this.counter === 0) {
-      this.presentStudents = this.startLecturing.filter( s => s.isPresent === true);
+      this.presentStudents = this.startLecturing.filter(
+        (s) => s.isPresent === true
+      );
       this.copyPresentStudents = [...this.presentStudents];
       this.counter++;
     }
     if (this.presentStudents.length >= 1) {
-      const rndInt = Math.floor(Math.random() * this.presentStudents.length) + 1;
+      const rndInt =
+        Math.floor(Math.random() * this.presentStudents.length) + 1;
       this.pickedStudent = this.presentStudents[rndInt - 1];
       this.pickedStudentName = this.pickedStudent.student.name;
-      if (this.presentStudents.length === 1){
+      this.pickedStudentId = this.pickedStudent.student.studentId;
+      if (this.presentStudents.length === 1) {
         this.presentStudents = [];
       } else {
         this.presentStudents.splice(rndInt - 1, 1);
       }
       console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
-    }
-    else {
-      this.messageForLecturing = 'All students are asked !!!';
-      this.pickedStudentName = '';
+    } else {
+      this.messageForLecturing = "All students are asked !!!";
+      this.pickedStudentName = "";
+      this.pickedStudentId = "";
     }
   }
 
@@ -151,14 +163,15 @@ export class ClassDetailsComponent implements OnInit {
     this.selectedAnswerType = answerType;
   }
 
-  addGrade(): void{
-    let studentAnswered: Answer = {
-      typeAnswer: this.selectedAnswerType,
-      gradeAnswer: this.gradeForAnswer,
-      dateAnswered: new Date(),
-      answerId: '123455o0sd'
-    };
-    console.log("Answe for student " + JSON.stringify(studentAnswered));
-    this.gradeForAnswer = '';
+  addGrade(): void {
+    // let studentAnswered: Answer = {
+    //   typeAnswer: this.selectedAnswerType,
+    //   gradeAnswer: this.gradeForAnswer,
+    //   dateAnswered: new Date(),
+    //   answerId: "123455o0sd",
+    // };
+    // console.log("Answe for student " + JSON.stringify(studentAnswered));
+    // this.gradeForAnswer = "";
   }
+  positiveResponse() {}
 }

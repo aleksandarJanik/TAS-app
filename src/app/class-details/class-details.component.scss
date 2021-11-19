@@ -35,3 +35,10 @@ li::before {
 #backToClassesBtn {
   opacity: 0.8;
 }
+.threeDots {
+  display: inline-block;
+  width: 350px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
