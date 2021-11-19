@@ -6,7 +6,6 @@
 <h1 class="text-center">Class details</h1>
 <br>
 </div>
-
 <!-- <div *ngFor="let c of classes">
 <p (click)="navigateToFirst(c.id)">{{c.name}}</p>
 </div> -->
@@ -102,6 +101,10 @@
       </div>
     </div>
   </div>
+</div>
+<div class="alert alert-danger"
+     *ngIf="messageSelected$ | async as messageSelected">
+  {{ messageSelected }}
 </div>
 
 <button class="btn btn-danger" (click)="logOut()" type="button" id="logaOut">Log out</button>

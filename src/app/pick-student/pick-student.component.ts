@@ -44,11 +44,12 @@ export class PickStudentComponent implements OnInit {
       this.showButtons = true;
     } else {
       window.close();
+      this.studentService.selectedMessageChanged("All students were asked once!!");
       let swal = Swal.fire({
         text: "All students were asked once!!",
         icon: "success",
       });
-      alert("All students were asked once!!");
+      // alert("All students were asked once!!");
     }
   }
   async positiveResponse() {

@@ -12,6 +12,8 @@ import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
 import { StudentService } from "../services/student.service";
 import { ElectronService } from "../core/services/electron/electron.service";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: "app-class-details",
@@ -38,6 +40,9 @@ export class ClassDetailsComponent implements OnInit {
   gradeForAnswer: string = "";
   selectedAnswerType: string = "";
   searchText;
+  messageSelected$ = this.studentService.messageSelectedAction$.pipe(
+    tap(product => console.log('selectedProduct', product))
+    );
 
   constructor(
     private route: ActivatedRoute,
@@ -72,6 +77,14 @@ export class ClassDetailsComponent implements OnInit {
       this.classId
     );
     this.students = await this.studentService.getStudentsByClass(this.classId);
+    this.startLecturing = this.students.map(
+      (s) =>
+        ({
+          student: s,
+          isPresent: true,
+          isPicked: false,
+        } as StartLecturing)
+    );
     this.studentNameSurname = "";
     let swal = Swal.fire({
       text: `The student ${this.studentNameSurname} successfully added!!`,

@@ -3,8 +3,10 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from "@angular/fire/compat/firestore";
+import { BehaviorSubject, combineLatest, Subject, } from "rxjs";
 import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
+import { catchError, filter, map, mergeMap, scan, shareReplay, tap, toArray, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: "root",
@@ -12,6 +14,10 @@ import { Student } from "../models/student";
 export class StudentService {
   private studentCollection: AngularFirestoreCollection<Student>;
   public presentStudents: StartLecturing[];
+  public errorMessage: string;
+
+  private messageSelectedSubject = new BehaviorSubject<string>('');
+  messageSelectedAction$ = this.messageSelectedSubject.asObservable();
 
   constructor(private firestore: AngularFirestore) {
     this.studentCollection = this.firestore.collection<Student>("Student");
@@ -85,5 +91,9 @@ export class StudentService {
     res.docs
       .find((c) => c.data().studentId === studentId)
       .ref.update({ typeAnswer: updatedTypeAnswer });
+  }
+
+  selectedMessageChanged(selectedMessage: string): void {
+    this.messageSelectedSubject.next(selectedMessage);
   }
 }
