@@ -10,7 +10,7 @@
 <div class="container-fluid bg-dark" style="height: 100%;">
   <div class="card" style="min-height: 70%;">
     <div class="card-header">
-      <h4 class="m-0 text-center fw-bold"><button class="btn btn-info" style="float: left; color:white"><i class="bi bi-info-circle "></i></button> <span style="margin-right: 3rem;">CLASSES</span></h4>
+      <h4 class="m-0 text-center fw-bold"><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#infoModal" style="float: left; color:white"><i class="bi bi-info-circle "></i></button> <span style="margin-right: 3rem;">CLASSES</span></h4>
     </div>
 
     <div class="card-body">
@@ -64,6 +64,28 @@
   </div>
 </div>
 <button class="btn btn-danger" (click)="logOut()" type="button" id="logaOut">Log out</button>
+
+<!-- Modal START -->
+<div class="modal fade bd-example-modal-lg" id="infoModal" data-bs-backdrop="static" data-bs-keyboard="false"
+  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header list-group-item-info">
+        <h5 class="modal-title" id="staticBackdropLabel">About us <i class="bi bi-info-circle "></i></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateStudent()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal END -->
 
 
 

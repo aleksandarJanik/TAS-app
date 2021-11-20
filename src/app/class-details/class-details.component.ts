@@ -40,9 +40,10 @@ export class ClassDetailsComponent implements OnInit {
   gradeForAnswer: string = "";
   selectedAnswerType: string = "";
   searchText;
+  openStudentForEdit;
   messageSelected$ = this.studentService.messageSelectedAction$.pipe(
-    tap(product => console.log('selectedProduct', product))
-    );
+    tap((product) => console.log("selectedProduct", product))
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -71,11 +72,7 @@ export class ClassDetailsComponent implements OnInit {
     }
   }
 
-  async addStudent() {
-    await this.studentService.createStudent(
-      this.studentNameSurname,
-      this.classId
-    );
+  async renderStudent() {
     this.students = await this.studentService.getStudentsByClass(this.classId);
     this.startLecturing = this.students.map(
       (s) =>
@@ -85,6 +82,14 @@ export class ClassDetailsComponent implements OnInit {
           isPicked: false,
         } as StartLecturing)
     );
+  }
+
+  async addStudent() {
+    await this.studentService.createStudent(
+      this.studentNameSurname,
+      this.classId
+    );
+    this.renderStudent();
     this.studentNameSurname = "";
     let swal = Swal.fire({
       text: `The student ${this.studentNameSurname} successfully added!!`,
@@ -124,6 +129,7 @@ export class ClassDetailsComponent implements OnInit {
   async removeStudent(studentId) {
     await this.studentService.deleteStudent(studentId);
     this.students = await this.studentService.getStudentsByClass(this.classId);
+    this.renderStudent();
     let swal = Swal.fire({
       text: "The student successfully removed!!",
       icon: "success",
@@ -173,7 +179,6 @@ export class ClassDetailsComponent implements OnInit {
       } else {
         this.presentStudents.splice(rndInt - 1, 1);
       }
-      console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
     } else {
       this.messageForLecturing = "All students are asked !!!";
       this.pickedStudentName = "";
@@ -195,5 +200,10 @@ export class ClassDetailsComponent implements OnInit {
     // console.log("Answe for student " + JSON.stringify(studentAnswered));
     // this.gradeForAnswer = "";
   }
-  positiveResponse() {}
+  addInfoToModal(student) {
+    this.openStudentForEdit = student;
+  }
+  updateStudent() {
+    console.log("updateStudent");
+  }
 }
