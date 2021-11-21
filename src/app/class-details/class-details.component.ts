@@ -40,7 +40,8 @@ export class ClassDetailsComponent implements OnInit {
   gradeForAnswer: string = "";
   selectedAnswerType: string = "";
   searchText;
-  openStudentForEdit;
+  openStudentForEdit: Student;
+  email;
   messageSelected$ = this.studentService.messageSelectedAction$.pipe(
     tap((product) => console.log("selectedProduct", product))
   );
@@ -87,10 +88,12 @@ export class ClassDetailsComponent implements OnInit {
   async addStudent() {
     await this.studentService.createStudent(
       this.studentNameSurname,
-      this.classId
+      this.classId,
+      this.email
     );
     this.renderStudent();
     this.studentNameSurname = "";
+    this.email = "";
     let swal = Swal.fire({
       text: `The student ${this.studentNameSurname} successfully added!!`,
       icon: "success",
@@ -203,7 +206,17 @@ export class ClassDetailsComponent implements OnInit {
   addInfoToModal(student) {
     this.openStudentForEdit = student;
   }
-  updateStudent() {
-    console.log("updateStudent");
+  async updateStudent() {
+    try {
+      let updatedStudent = await this.studentService.updateStudentInModal(
+        this.openStudentForEdit
+      );
+      let swal = Swal.fire({
+        text: "The student successfully updated!!",
+        icon: "success",
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 }

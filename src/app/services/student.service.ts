@@ -3,10 +3,20 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from "@angular/fire/compat/firestore";
-import { BehaviorSubject, combineLatest, Subject, } from "rxjs";
+import { BehaviorSubject, combineLatest, Subject } from "rxjs";
 import { StartLecturing } from "../models/startLecturing";
 import { Student } from "../models/student";
-import { catchError, filter, map, mergeMap, scan, shareReplay, tap, toArray, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  scan,
+  shareReplay,
+  tap,
+  toArray,
+  switchMap,
+} from "rxjs/operators";
 
 @Injectable({
   providedIn: "root",
@@ -16,7 +26,7 @@ export class StudentService {
   public presentStudents: StartLecturing[];
   public errorMessage: string;
 
-  private messageSelectedSubject = new BehaviorSubject<string>('');
+  private messageSelectedSubject = new BehaviorSubject<string>("");
   messageSelectedAction$ = this.messageSelectedSubject.asObservable();
 
   constructor(private firestore: AngularFirestore) {
@@ -57,7 +67,7 @@ export class StudentService {
     res.docs.find((c) => c.data().studentId === studentId).ref.delete();
   }
 
-  async createStudent(studentName: string, classId: string) {
+  async createStudent(studentName: string, classId: string, email: string) {
     let studentId = await this.generateRandomId();
 
     let studentObj: Student = {
@@ -65,6 +75,7 @@ export class StudentService {
       name: studentName,
       studentId: studentId,
       typeAnswer: "",
+      email,
     };
 
     let repsonse = await this.studentCollection.add(studentObj);
@@ -95,5 +106,17 @@ export class StudentService {
 
   selectedMessageChanged(selectedMessage: string): void {
     this.messageSelectedSubject.next(selectedMessage);
+  }
+
+  async updateStudentInModal(studentFromModal: Student) {
+    let res = await this.studentCollection.ref.get();
+    let student = await this.getStudentById(studentFromModal.studentId);
+    return res.docs
+      .find((c) => c.data().studentId === studentFromModal.studentId)
+      .ref.update({
+        typeAnswer: studentFromModal.typeAnswer,
+        name: studentFromModal.name,
+        email: studentFromModal.email,
+      });
   }
 }

@@ -14,6 +14,7 @@ import { LogInService } from "../login/LogIn.service";
 export class SignUpComponent implements OnInit {
   userName: string;
   userPassword: string;
+  email: string;
 
   constructor(
     private signUpService: SignUpService,
@@ -40,6 +41,7 @@ export class SignUpComponent implements OnInit {
       id: userId,
       password: this.userPassword,
       userName: this.userName,
+      email: this.email,
     };
     let response = await this.signUpService.createUser(createUser);
     if (response == false) {

@@ -3,6 +3,7 @@ export class Student {
   name: string;
   studentId: string;
   typeAnswer: string;
+  email: string;
 }
 
 export enum TypeAnswer {
