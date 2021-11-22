@@ -16,6 +16,7 @@ import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { ClassService } from "../class/class.service";
 import { Angular2Csv } from "angular2-csv/Angular2-csv";
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-class-details",
@@ -42,9 +43,12 @@ export class ClassDetailsComponent implements OnInit {
   gradeForAnswer: string = "";
   selectedAnswerType: string = "";
   searchText;
-  openStudentForEdit: Student;
+  openStudentForEdit: StartLecturing;
   email;
   classesToExport: ExportCsvStudentDto[];
+  profileName: string;
+  profileEmail: string;
+  profileTypeAnswer: string;
   messageSelected$ = this.studentService.messageSelectedAction$.pipe(
     tap((product) => console.log("selectedProduct", product))
   );
@@ -249,13 +253,27 @@ export class ClassDetailsComponent implements OnInit {
     // console.log("Answe for student " + JSON.stringify(studentAnswered));
     // this.gradeForAnswer = "";
   }
-  addInfoToModal(student) {
-    this.openStudentForEdit = student;
+  addInfoToModal(studentId) {
+    this.openStudentForEdit = this.startLecturing.find(s => s.student.studentId === studentId);
+    this.profileName = this.openStudentForEdit.student.name;
+    this.profileEmail = this.openStudentForEdit.student.email;
+    this.profileTypeAnswer = this.openStudentForEdit.student.typeAnswer;
   }
   async updateStudent() {
     try {
       let updatedStudent = await this.studentService.updateStudentInModal(
-        this.openStudentForEdit
+        this.openStudentForEdit.student.studentId, this.profileName, this.profileEmail, this.profileTypeAnswer
+      );
+      this.students = await this.studentService.getStudentsByClass(
+        this.classId
+      );
+      this.startLecturing = this.students.map(
+        (s) =>
+          ({
+            student: s,
+            isPresent: true,
+            isPicked: false,
+          } as StartLecturing)
       );
       let swal = Swal.fire({
         text: "The student successfully updated!!",

@@ -108,15 +108,21 @@ export class StudentService {
     this.messageSelectedSubject.next(selectedMessage);
   }
 
-  async updateStudentInModal(studentFromModal: Student) {
+  async updateStudentInModal(studentId: string,profileName: string, profileEmail: string, profileTypeAnswer: string) {
+    let studentFormModal: Student = {
+      studentId: studentId,
+      name: profileName,
+      email: profileEmail,
+      typeAnswer: profileTypeAnswer
+    };
     let res = await this.studentCollection.ref.get();
-    let student = await this.getStudentById(studentFromModal.studentId);
+    let student = await this.getStudentById(studentFormModal.studentId);
     return res.docs
-      .find((c) => c.data().studentId === studentFromModal.studentId)
+      .find((c) => c.data().studentId === studentFormModal.studentId)
       .ref.update({
-        typeAnswer: studentFromModal.typeAnswer,
-        name: studentFromModal.name,
-        email: studentFromModal.email,
+        typeAnswer: studentFormModal.typeAnswer,
+        name: studentFormModal.name,
+        email: studentFormModal.email,
       });
   }
 }

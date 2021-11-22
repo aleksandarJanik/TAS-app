@@ -102,7 +102,7 @@
               </div>
               <div class="col-1 center-XY p-0">
                 <div class="col-6 center-XY p-0">
-                  <button style="font-size: 16px; color:#17a2b8 !important;" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addInfoToModal(s.student)" type="button" class="btn btn-tool btnToOpenModalSudent p-0"><i class="bi bi-binoculars-fill"></i></button>
+                  <button style="font-size: 16px; color:#17a2b8 !important;" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="addInfoToModal(s.student.studentId)" type="button" class="btn btn-tool btnToOpenModalSudent p-0"><i class="bi bi-binoculars-fill"></i></button>
                 </div>
                 <div class="col-6 center-XY p-0">
                   <button style="font-size: 16px; color:#dc3545;" (click)="removeStudent(s.student.studentId)" class="btn btn-tool removeStudent p-0"><i class="bi bi-x-circle-fill"></i></button>
@@ -146,19 +146,19 @@
           <div class="form-group row">
             <label for="studentName" class="col-12 col-form-label">Name:</label>
             <div class="col-12">
-              <input type="text" class="form-control" id="studentName" [(ngModel)]="openStudentForEdit.name" value="{{openStudentForEdit.name}}">
+              <input type="text" class="form-control" id="studentName" [(ngModel)]="profileName" value="{{openStudentForEdit.name}}">
             </div>
           </div>
           <div class="form-group row">
             <label for="studentEmail" class="col-12 col-form-label">Email:</label>
             <div class="col-12">
-              <input type="text" class="form-control" id="studentEmail" [(ngModel)]="openStudentForEdit.email"  value="{{openStudentForEdit.email}}">
+              <input type="text" class="form-control" id="studentEmail" [(ngModel)]="profileEmail"  value="{{openStudentForEdit.email}}">
             </div>
           </div>
           <div class="form-group row">
             <label for="studentActivities" class="col-12 col-form-label">Activities:</label>
             <div class="col-12">
-              <input type="text" class="form-control" id="studentActivities" [(ngModel)]="openStudentForEdit.typeAnswer" value="{{openStudentForEdit.typeAnswer}}">
+              <input type="text" class="form-control" id="studentActivities" [(ngModel)]="profileTypeAnswer" value="{{openStudentForEdit.typeAnswer}}">
             </div>
           </div>
 
