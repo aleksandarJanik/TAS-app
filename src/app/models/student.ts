@@ -10,3 +10,10 @@ export enum TypeAnswer {
   PLUS = "+",
   MINUS = "-",
 }
+
+export class ExportCsvStudentDto {
+  className: string;
+  studentName: string;
+  typeAnswer: string;
+  email: string;
+}

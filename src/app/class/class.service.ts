@@ -37,6 +37,11 @@ export class ClassService {
     return classes;
   }
 
+  async getClassById(classId) {
+    let classes = await this.getClasses();
+    return classes.find((c) => c.classId === classId);
+  }
+
   async createClass(className: string) {
     let userId = localStorage.userId;
     let classId = await this.generateRandomId();

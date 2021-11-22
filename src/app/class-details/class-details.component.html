@@ -13,10 +13,12 @@
   <div class="card" style="min-height: 70%;">
     <div class="card-header" >
       <h4 class="m-0 text-center fw-bold">
-        <button class="btn btn-success" (click)="startClassLecturing()" style="float: left;">START LECTURING</button>
-        <span style="vertical-align: middle;margin-right: 20px;">STUDENTS</span>
+        <button class="btn btn-success" (click)="startClassLecturing()" style="float: left; margin-right: 1px;">START LECTURING</button>
+        <button class="btn btn-dark" style="float: left;" (click)="downloadFile()">Export in csv</button>
+        <span style="vertical-align: middle;margin-right: 8rem;">STUDENTS</span>
         <button class="btn btn-tool" id="backToClassesBtn" (click)="redirectToClasses()" style="float: right;"><i class="bi bi-arrow-left-circle-fill" style="margin-right: 2px;"></i>Back to classes</button></h4>
     </div>
+
 
     <div class="card-body">
       <div class="container-fluid">
@@ -36,6 +38,7 @@
                 </div>
               </div>
             </div>
+
             <div class="card-body collapse" id="addStudentFormCardBody">
 
               <form action="/" method="POST" id="addClassForm">
@@ -61,10 +64,17 @@
 
           </div>
 
-          <div class="">
+
+
+          <div class="text-center">
             <br>
-            <input type="text" class="form-control" [(ngModel)]="searchText" autocomplete="off" style="width:30rem; margin: 0 auto;" placeholder="Search students...">
+
+
+
+          <input type="text" class="form-control" [(ngModel)]="searchText" autocomplete="off" style="width:30rem; margin: 0 auto;" placeholder="Search students...">
           </div>
+
+
           <div class="col-12"></div>
           <br>
           <!-- asd -->
@@ -164,3 +174,4 @@
   </div>
 </div>
 <!-- Modal END -->
+

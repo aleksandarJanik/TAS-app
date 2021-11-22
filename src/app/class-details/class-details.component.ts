@@ -9,11 +9,13 @@ import { StringLiteralLike } from "typescript";
 import { LogInService } from "../login/components/login/LogIn.service";
 import { Class } from "../models/class";
 import { StartLecturing } from "../models/startLecturing";
-import { Student } from "../models/student";
+import { ExportCsvStudentDto, Student } from "../models/student";
 import { StudentService } from "../services/student.service";
 import { ElectronService } from "../core/services/electron/electron.service";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
+import { ClassService } from "../class/class.service";
+import { Angular2Csv } from "angular2-csv/Angular2-csv";
 
 @Component({
   selector: "app-class-details",
@@ -42,9 +44,22 @@ export class ClassDetailsComponent implements OnInit {
   searchText;
   openStudentForEdit: Student;
   email;
+  classesToExport: ExportCsvStudentDto[];
   messageSelected$ = this.studentService.messageSelectedAction$.pipe(
     tap((product) => console.log("selectedProduct", product))
   );
+  options = {
+    fieldSeparator: ",",
+    quoteStrings: '"',
+    decimalseparator: ".",
+    showLabels: false,
+    headers: [],
+    showTitle: true,
+    title: "",
+    useBom: false,
+    removeNewLines: true,
+    keys: ["className", "studentName", "typeAnswer", "email"],
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +67,8 @@ export class ClassDetailsComponent implements OnInit {
     private logInService: LogInService,
     private _router: Router,
     private el: ElementRef,
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private classService: ClassService
   ) {}
 
   async ngOnInit() {
@@ -70,7 +86,35 @@ export class ClassDetailsComponent implements OnInit {
           } as StartLecturing)
       );
       // console.log("start lecturing Object " + JSON.stringify(this.startLecturing));
+      this.prepareForExport();
     }
+  }
+
+  downloadFile() {
+    new Angular2Csv(this.classesToExport, "test", this.options);
+  }
+
+  async prepareForExport() {
+    let classFull = await this.classService.getClassById(this.classId);
+    let studentsForEx = await this.studentService.getStudentsByClass(
+      this.classId
+    );
+    this.classesToExport = studentsForEx.map((s) => {
+      let newS: ExportCsvStudentDto = {
+        className: classFull.name,
+        email: s.email,
+        studentName: s.name,
+        typeAnswer: s.typeAnswer,
+      };
+      return newS;
+    });
+    let title: ExportCsvStudentDto = {
+      className: "Class",
+      studentName: "Student",
+      typeAnswer: "Аctivities",
+      email: "Email",
+    };
+    this.classesToExport.unshift(title);
   }
 
   async renderStudent() {
@@ -98,6 +142,7 @@ export class ClassDetailsComponent implements OnInit {
       text: `The student ${this.studentNameSurname} successfully added!!`,
       icon: "success",
     });
+    this.prepareForExport();
   }
   async logOut() {
     await this.logInService.logout();
@@ -137,6 +182,7 @@ export class ClassDetailsComponent implements OnInit {
       text: "The student successfully removed!!",
       icon: "success",
     });
+    this.prepareForExport();
   }
 
   checkValue(student: StartLecturing): void {
@@ -215,6 +261,7 @@ export class ClassDetailsComponent implements OnInit {
         text: "The student successfully updated!!",
         icon: "success",
       });
+      this.prepareForExport();
     } catch (e) {
       console.log(e);
     }
