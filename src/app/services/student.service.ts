@@ -108,12 +108,23 @@ export class StudentService {
     this.messageSelectedSubject.next(selectedMessage);
   }
 
-  async updateStudentInModal(studentId: string,profileName: string, profileEmail: string, profileTypeAnswer: string) {
+  async deleteAllStudentsByClassId(classId: string) {
+    let res = await this.studentCollection.ref.get();
+    let studentsToDel = res.docs.filter((c) => c.data().classId === classId);
+    studentsToDel.forEach((s) => s.ref.delete());
+  }
+
+  async updateStudentInModal(
+    studentId: string,
+    profileName: string,
+    profileEmail: string,
+    profileTypeAnswer: string
+  ) {
     let studentFormModal: Student = {
       studentId: studentId,
       name: profileName,
       email: profileEmail,
-      typeAnswer: profileTypeAnswer
+      typeAnswer: profileTypeAnswer,
     };
     let res = await this.studentCollection.ref.get();
     let student = await this.getStudentById(studentFormModal.studentId);

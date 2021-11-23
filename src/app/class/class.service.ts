@@ -61,6 +61,7 @@ export class ClassService {
   }
   async deleteClass(classId: string) {
     let res = await this.classCollection.ref.get();
+    await this.studentService.deleteAllStudentsByClassId(classId);
     return res.docs.find((c) => c.data().classId === classId).ref.delete();
   }
   async generateRandomId(): Promise<string> {
