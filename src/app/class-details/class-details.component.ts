@@ -243,18 +243,10 @@ export class ClassDetailsComponent implements OnInit {
     this.selectedAnswerType = answerType;
   }
 
-  addGrade(): void {
-    // let studentAnswered: Answer = {
-    //   typeAnswer: this.selectedAnswerType,
-    //   gradeAnswer: this.gradeForAnswer,
-    //   dateAnswered: new Date(),
-    //   answerId: "123455o0sd",
-    // };
-    // console.log("Answe for student " + JSON.stringify(studentAnswered));
-    // this.gradeForAnswer = "";
-  }
   addInfoToModal(studentId) {
-    this.openStudentForEdit = this.startLecturing.find(s => s.student.studentId === studentId);
+    this.openStudentForEdit = this.startLecturing.find(
+      (s) => s.student.studentId === studentId
+    );
     this.profileName = this.openStudentForEdit.student.name;
     this.profileEmail = this.openStudentForEdit.student.email;
     this.profileTypeAnswer = this.openStudentForEdit.student.typeAnswer;
@@ -262,7 +254,10 @@ export class ClassDetailsComponent implements OnInit {
   async updateStudent() {
     try {
       let updatedStudent = await this.studentService.updateStudentInModal(
-        this.openStudentForEdit.student.studentId, this.profileName, this.profileEmail, this.profileTypeAnswer
+        this.openStudentForEdit.student.studentId,
+        this.profileName,
+        this.profileEmail,
+        this.profileTypeAnswer
       );
       this.students = await this.studentService.getStudentsByClass(
         this.classId

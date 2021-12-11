@@ -8,11 +8,17 @@ import { ClassComponent } from "./class/class.component";
 import { ClassDetailsComponent } from "./class-details/class-details.component";
 import { AuthGuardService } from "./guards/auth-guard.service";
 import { PickStudentComponent } from "./pick-student/pick-student.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 const routes: Routes = [
   {
     path: "pick",
     component: PickStudentComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "change-password",
+    component: ChangePasswordComponent,
     canActivate: [AuthGuardService],
   },
   {
@@ -25,6 +31,7 @@ const routes: Routes = [
     component: ClassComponent,
     canActivate: [AuthGuardService],
   },
+
   {
     path: "",
     redirectTo: "class",

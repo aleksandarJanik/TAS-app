@@ -43,12 +43,13 @@ export class PickStudentComponent implements OnInit {
         } else {
           this.presentStudents.splice(rndInt - 1, 1);
         }
-        // console.log("arrayyyyyy " + JSON.stringify(this.presentStudents));
         this.showButtons = true;
         this.working = false;
       } else {
         window.close();
-        this.studentService.selectedMessageChanged("All students were asked once!!");
+        this.studentService.selectedMessageChanged(
+          "All students were asked once!!"
+        );
         let swal = Swal.fire({
           text: "All students were asked once!!",
           icon: "success",

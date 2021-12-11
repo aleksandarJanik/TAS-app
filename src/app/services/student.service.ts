@@ -95,10 +95,7 @@ export class StudentService {
   async uploadStudentAnswer(studentId, answer: string) {
     let res = await this.studentCollection.ref.get();
     let student = await this.getStudentById(studentId);
-    console.log(student);
     const updatedTypeAnswer = student.typeAnswer + answer;
-    console.log("updatedTypeAnswer: ", student.typeAnswer, answer);
-    console.log(student);
     res.docs
       .find((c) => c.data().studentId === studentId)
       .ref.update({ typeAnswer: updatedTypeAnswer });
